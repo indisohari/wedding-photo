@@ -78,8 +78,8 @@
         .btn-submit:hover:not(:disabled) { background-color: #4c6ef5; }
         .btn-submit:disabled { background-color: #adb5bd; cursor: not-allowed; }
 
-        /* 섹션 전환 */
-        #upload-section { display: none; }
+        /* 업로드 섹션 항상 표시 */
+        #upload-section { display: block; }
 
         /* 20MB 초과 Dropbox 안내 카드 */
         #dropbox-card {
@@ -176,17 +176,7 @@
         <h1>동윤 &amp; 지연 결혼식</h1>
         <p class="subtitle">2026. 05. 23</p>
 
-        <!-- 1단계: 입장 코드 -->
-        <div id="auth-section">
-            <div class="input-group">
-                <label>예식일 4자리를 입력해주세요</label>
-                <input type="text" id="passcode" placeholder="예: 0523" maxlength="4" inputmode="numeric">
-            </div>
-            <button class="btn-submit" id="btn-verify">입장하기</button>
-            <div id="auth-error" class="text-error" style="margin-top: 15px; display: none;">비밀번호가 틀렸습니다.</div>
-        </div>
-
-        <!-- 2단계: 업로드 -->
+        <!-- 업로드 -->
         <div id="upload-section">
             <!-- 이름 입력 (선택) -->
             <div class="input-group">
@@ -234,13 +224,12 @@
 
     <script>
         // ▼▼▼ 배포 전 반드시 채워주세요 ▼▼▼
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6a2Qg6naq-bcnOk2qrIP86jGDHZJBvMDNv3LnhrjwyOBSzytX7UPxIaz49vQBriHIAA/exec';
-const DROPBOX_URL = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6a2Qg6naq-bcnOk2qrIP86jGDHZJBvMDNv3LnhrjwyOBSzytX7UPxIaz49vQBriHIAA/exec';
+        const DROPBOX_URL       = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
         // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-        const WEDDING_CODE   = '0523';
-        const MAX_BYTES      = 20 * 1024 * 1024; // 20MB
-        const MAX_RETRY      = 3;
+        const MAX_BYTES  = 20 * 1024 * 1024; // 20MB
+        const MAX_RETRY  = 3;
 
         // Dropbox 링크 일괄 적용
         document.getElementById('dropbox-card-link').href   = DROPBOX_URL;
@@ -252,29 +241,11 @@ const DROPBOX_URL = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
             if (ua.includes('android')) {
                 location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(location.href);
             } else {
-                // iOS: 자동 이탈 불가 → 안내 화면 표시
                 document.getElementById('kakao-guide').style.display = 'flex';
             }
         }
 
-        // ── 1단계: 입장 코드 ──────────────────────────────────
-        const passcodeInput = document.getElementById('passcode');
-
-        document.getElementById('btn-verify').addEventListener('click', verifyCode);
-        passcodeInput.addEventListener('keydown', e => { if (e.key === 'Enter') verifyCode(); });
-
-        function verifyCode() {
-            if (passcodeInput.value === WEDDING_CODE) {
-                document.getElementById('auth-section').style.display = 'none';
-                document.getElementById('upload-section').style.display = 'block';
-            } else {
-                document.getElementById('auth-error').style.display = 'block';
-                passcodeInput.value = '';
-                passcodeInput.focus();
-            }
-        }
-
-        // ── 2단계: 파일 선택 ──────────────────────────────────
+        // ── 파일 선택 ──────────────────────────────────────────
         const fileInput  = document.getElementById('file-input');
         const btnUpload  = document.getElementById('btn-upload');
         const btnFileText = document.getElementById('btn-file-text');
@@ -349,40 +320,25 @@ const DROPBOX_URL = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
         });
 
         // ── 업로드 (지수 백오프 재시도) ──────────────────────
-async function uploadWithRetry(payload, attempt = 0) {
-    try {
-        const res = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            redirect: 'follow',  // ← 이 줄 추가
-        });
-        
-        // 응답 텍스트 먼저 받기
-        const text = await res.text();
-        
-        // JSON 파싱 시도
-        let json;
-        try {
-            json = JSON.parse(text);
-        } catch (_) {
-            // JSON 파싱 실패해도 Drive에 저장됐을 수 있으므로 성공으로 처리
-            console.log('Response:', text);
-            return; // 성공으로 간주
+        async function uploadWithRetry(payload, attempt = 0) {
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL, {
+                    method : 'POST',
+                    body   : JSON.stringify(payload),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                });
+                const json = await res.json();
+                if (json.status !== 'ok') throw new Error(json.message || 'Server error');
+            } catch (err) {
+                if (attempt < MAX_RETRY) {
+                    const delay = Math.pow(2, attempt) * 1000; // 1s → 2s → 4s
+                    showMsg(`잠시 후 다시 시도합니다… (${attempt + 1}/${MAX_RETRY})`, 'text-warn');
+                    await sleep(delay);
+                    return uploadWithRetry(payload, attempt + 1);
+                }
+                throw err;
+            }
         }
-        
-        if (json.status !== 'ok') throw new Error(json.message || 'Server error');
-        
-    } catch (err) {
-        if (attempt < MAX_RETRY) {
-            const delay = Math.pow(2, attempt) * 1000;
-            showMsg(`잠시 후 다시 시도합니다… (${attempt + 1}/${MAX_RETRY})`, 'text-warn');
-            await sleep(delay);
-            return uploadWithRetry(payload, attempt + 1);
-        }
-        throw err;
-    }
-}
 
         // ── 헬퍼 ──────────────────────────────────────────────
         function toBase64(file) {
