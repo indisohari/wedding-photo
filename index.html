@@ -19,7 +19,7 @@
         }
         .card {
             background: #ffffff;
-            padding: 40px 30px;
+            padding: 44px 30px;
             border-radius: 16px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             max-width: 400px;
@@ -27,116 +27,74 @@
             text-align: center;
             border: 1px solid #f0f0f0;
         }
-        h1 { font-size: 1.6rem; color: #4a4a4a; margin-bottom: 10px; font-weight: 600; }
-        p.subtitle { font-size: 1.1rem; color: #888; margin-bottom: 30px; }
-
-        .input-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; font-size: 1.05rem; margin-bottom: 8px; color: #555; font-weight: 500; }
-        input[type="text"] {
-            width: 100%;
-            padding: 14px;
+        h1 {
+            font-size: 1.6rem;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        p.subtitle {
             font-size: 1.1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
+            color: #888;
+            margin-bottom: 32px;
         }
-        input[type="text"]:focus { outline: none; border-color: #5c7cfa; }
-        .input-hint { font-size: 0.85rem; color: #aaa; margin-top: 5px; }
-
-        /* 파일 업로드 버튼 */
-        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-bottom: 16px; }
-        .file-upload-wrapper input[type="file"] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%; }
-        .btn-file {
-            background-color: #f1f3f5;
-            color: #495057;
-            border: 2px dashed #ced4da;
-            padding: 20px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            font-weight: bold;
-            width: 100%;
-            box-sizing: border-box;
-            cursor: pointer;
-            display: block;
-            transition: background 0.2s;
+        .description {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 28px;
         }
-        .btn-file:hover { background-color: #e9ecef; }
-
-        .btn-submit {
-            background-color: #5c7cfa;
-            color: white;
-            border: none;
-            padding: 18px;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .btn-submit:hover:not(:disabled) { background-color: #4c6ef5; }
-        .btn-submit:disabled { background-color: #adb5bd; cursor: not-allowed; }
-
-        /* 업로드 섹션 항상 표시 */
-        #upload-section { display: block; }
-
-        /* 20MB 초과 Dropbox 안내 카드 */
-        #dropbox-card {
-            display: none;
-            margin-top: 20px;
-            background: #fff9db;
-            border: 2px solid #ffd43b;
-            border-radius: 10px;
-            padding: 18px;
-            text-align: left;
-        }
-        #dropbox-card .dropbox-title {
-            font-size: 1.0rem;
-            font-weight: bold;
-            color: #5c3d00;
-            margin-bottom: 8px;
-        }
-        #dropbox-card .dropbox-body {
-            font-size: 0.95rem;
-            color: #6d4c00;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        .btn-dropbox {
+        .btn-upload {
             display: block;
             background-color: #0061fe;
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 1.05rem;
-            border-radius: 8px;
+            padding: 22px 18px;
+            font-size: 1.2rem;
+            border-radius: 10px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
             text-decoration: none;
-            text-align: center;
             box-sizing: border-box;
+            transition: background 0.2s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        /* 상태 메시지 */
-        #status-msg { margin-top: 20px; font-size: 1.05rem; font-weight: bold; min-height: 24px; line-height: 1.5; }
-        .text-info { color: #339af0; }
-        .text-success { color: #40c057; }
-        .text-error { color: #fa5252; }
-        .text-warn { color: #f59f00; }
-
-        /* 아랫단 Dropbox 링크 (일반 영상 안내) */
-        .dropbox-footer {
-            margin-top: 28px;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
+        .btn-upload:hover { background-color: #0050cc; }
+        .btn-upload:active { transform: scale(0.98); }
+        .btn-upload .icon {
+            display: block;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        .btn-upload .sub {
+            display: block;
             font-size: 0.9rem;
-            color: #868e96;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 6px;
         }
-        .dropbox-footer a { color: #5c7cfa; font-weight: bold; text-decoration: none; }
+        .info {
+            margin-top: 24px;
+            font-size: 0.92rem;
+            color: #868e96;
+            line-height: 1.7;
+            text-align: left;
+            background: #f8f9fa;
+            padding: 16px 18px;
+            border-radius: 10px;
+        }
+        .info strong {
+            color: #495057;
+        }
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.82rem;
+            color: #adb5bd;
+            line-height: 1.5;
+        }
 
-        /* 카카오톡 차단 화면 */
+        /* 카카오톡 인앱 차단 화면 */
         #kakao-guide {
             display: none;
             position: fixed;
@@ -152,23 +110,61 @@
             text-align: center;
             box-sizing: border-box;
         }
-        #kakao-guide h2 { color: #ffd43b; font-size: 1.8rem; margin-bottom: 20px; }
-        #kakao-guide p { font-size: 1.2rem; line-height: 1.8; }
-
-        /* 업로드 진행 바 */
-        .progress-wrap { margin-top: 12px; background: #e9ecef; border-radius: 999px; overflow: hidden; height: 6px; display: none; }
-        .progress-bar { height: 100%; background: #5c7cfa; width: 0%; transition: width 0.3s; }
+        #kakao-guide h2 {
+            color: #ffd43b;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        #kakao-guide p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+        #kakao-guide strong {
+            color: #ffd43b;
+        }
+        #kakao-guide .step {
+            background: rgba(255,255,255,0.08);
+            padding: 16px 18px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            text-align: left;
+            max-width: 320px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #kakao-guide .step-num {
+            display: inline-block;
+            background: #ffd43b;
+            color: black;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            line-height: 24px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <!-- 카카오톡 iOS 차단 화면 -->
     <div id="kakao-guide">
-        <h2>⚠️ 화면 우측 하단을 확인해주세요</h2>
-        <p>
-            카카오톡 안에서는 사진 전송이 어렵습니다.<br><br>
-            화면 아래의 <strong>[ ⋮ ]</strong> 기호를 누른 후,<br>
-            <strong>[다른 브라우저로 열기]</strong>를 선택해 주세요.
+        <h2>⚠️ 사진을 보내려면<br>외부 브라우저로 열어주세요</h2>
+        <div class="step">
+            <span class="step-num">1</span>화면 <strong>우측 하단 공유 버튼(↑)</strong> 누르기
+        </div>
+        <div class="step">
+            <span class="step-num">2</span><strong>"Safari로 열기"</strong> 또는<br>
+            <span style="margin-left: 34px;"><strong>"Chrome에서 열기"</strong> 선택</span>
+        </div>
+        <p style="margin-top: 24px; font-size: 0.92rem; opacity: 0.7;">
+            카카오톡 안에서는 사진·영상 전송이<br>제대로 작동하지 않습니다.
         </p>
     </div>
 
@@ -176,204 +172,44 @@
         <h1>동윤 &amp; 지연 결혼식</h1>
         <p class="subtitle">2026. 05. 23</p>
 
-        <!-- 업로드 -->
-        <div id="upload-section">
-            <!-- 이름 입력 (선택) -->
-            <div class="input-group">
-                <label for="guest-name">성함 <span style="color:#aaa; font-weight:400;">(선택)</span></label>
-                <input type="text" id="guest-name" placeholder="예: 김철수" maxlength="20" autocomplete="off">
-                <div class="input-hint">입력하시면 폴더가 이름별로 정리됩니다.</div>
-            </div>
+        <p class="description">
+            오늘 함께해주신 순간을<br>
+            사진·영상으로 보내주세요.
+        </p>
 
-            <!-- 파일 선택 -->
-            <div class="file-upload-wrapper">
-                <button class="btn-file" id="btn-file-text">📸 여기를 눌러 사진 선택하기</button>
-                <input type="file" id="file-input" multiple accept="image/*,video/*,.heic,.heif">
-            </div>
+        <a href="#" id="btn-upload" class="btn-upload" target="_blank" rel="noopener">
+            <span class="icon">📸</span>
+            사진·영상 보내기
+            <span class="sub">로그인 없이 바로 업로드</span>
+        </a>
 
-            <!-- 진행 바 -->
-            <div class="progress-wrap" id="progress-wrap">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+        <div class="info">
+            ① 버튼을 누르면 <strong>이름 입력란</strong>이 나옵니다.<br>
+            ② 성함 입력 후 사진·영상을 선택해주세요.<br>
+            ③ 여러 개를 한 번에 보낼 수 있습니다.
+        </div>
 
-            <!-- 전송 버튼 -->
-            <button class="btn-submit" id="btn-upload" disabled>전송하기</button>
-
-            <!-- 상태 메시지 -->
-            <div id="status-msg"></div>
-
-            <!-- 20MB 초과 파일 Dropbox 안내 카드 (필요 시 노출) -->
-            <div id="dropbox-card">
-                <div class="dropbox-title">📦 용량이 큰 파일이 있어요</div>
-                <div class="dropbox-body" id="dropbox-card-body">
-                    20MB를 초과하는 파일은 아래 버튼으로 따로 보내주세요.<br>
-                    로그인 없이 바로 업로드할 수 있습니다.
-                </div>
-                <a id="dropbox-card-link" href="#" target="_blank" class="btn-dropbox">📤 대용량 파일 보내기</a>
-            </div>
-
-            <!-- 하단 Dropbox 일반 안내 -->
-            <div class="dropbox-footer">
-                긴 동영상·고화질 영상은<br>
-                <a id="dropbox-footer-link" href="#" target="_blank">고화질 동영상 보내기 ➔</a>
-                <br><br>
-                <span style="font-size:0.8rem;">※ 2GB 초과 영상은 신랑·신부에게 직접 전달 부탁드립니다.</span>
-            </div>
+        <div class="footer-note">
+            ※ 2GB 이상의 긴 영상은<br>신랑·신부에게 직접 전달 부탁드립니다.
         </div>
     </div>
 
     <script>
-        // ▼▼▼ 배포 전 반드시 채워주세요 ▼▼▼
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6a2Qg6naq-bcnOk2qrIP86jGDHZJBvMDNv3LnhrjwyOBSzytX7UPxIaz49vQBriHIAA/exec';
-        const DROPBOX_URL       = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
-        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+        // ▼ Dropbox File Request URL ▼
+        const DROPBOX_URL = 'https://www.dropbox.com/request/hin1yx7ybjcizc36i899';
 
-        const MAX_BYTES  = 20 * 1024 * 1024; // 20MB
-        const MAX_RETRY  = 3;
+        // 버튼에 Dropbox URL 연결
+        document.getElementById('btn-upload').href = DROPBOX_URL;
 
-        // Dropbox 링크 일괄 적용
-        document.getElementById('dropbox-card-link').href   = DROPBOX_URL;
-        document.getElementById('dropbox-footer-link').href = DROPBOX_URL;
-
-        // ── 카카오톡 인앱 브라우저 처리 ───────────────────────
+        // 카카오톡 인앱 브라우저 감지
         const ua = navigator.userAgent.toLowerCase();
         if (ua.includes('kakaotalk')) {
             if (ua.includes('android')) {
+                // 안드로이드: 외부 브라우저로 자동 이탈
                 location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(location.href);
             } else {
+                // iOS: 자동 이탈 불가 → 안내 화면
                 document.getElementById('kakao-guide').style.display = 'flex';
-            }
-        }
-
-        // ── 파일 선택 ──────────────────────────────────────────
-        const fileInput  = document.getElementById('file-input');
-        const btnUpload  = document.getElementById('btn-upload');
-        const btnFileText = document.getElementById('btn-file-text');
-
-        fileInput.addEventListener('change', () => {
-            const count = fileInput.files.length;
-            if (count > 0) {
-                btnFileText.innerText = `✅ ${count}개 선택됨`;
-                btnUpload.disabled = false;
-                // 초과 파일 미리 감지해서 카드 표시
-                const hasLarge = Array.from(fileInput.files).some(f => f.size > MAX_BYTES);
-                showDropboxCard(hasLarge);
-                showMsg('', '');
-            }
-        });
-
-        // ── 3단계: 전송 ───────────────────────────────────────
-        btnUpload.addEventListener('click', async () => {
-            const files     = Array.from(fileInput.files);
-            const guestName = document.getElementById('guest-name').value.trim() || '익명';
-            const small     = files.filter(f => f.size <= MAX_BYTES);
-            const large     = files.filter(f => f.size > MAX_BYTES);
-
-            if (small.length === 0 && large.length > 0) {
-                // 선택한 파일이 전부 대용량인 경우
-                showMsg('선택한 파일이 모두 20MB를 초과합니다.\n아래 버튼으로 보내주세요.', 'text-warn');
-                showDropboxCard(true, large);
-                return;
-            }
-
-            btnUpload.disabled = true;
-            setProgress(0, true);
-
-            let success = 0;
-            let failed  = [];
-
-            for (let i = 0; i < small.length; i++) {
-                showMsg(`전송 중... (${i + 1}/${small.length})`, 'text-info');
-                setProgress((i / small.length) * 100);
-
-                try {
-                    const base64 = await toBase64(small[i]);
-                    await uploadWithRetry({
-                        filename : small[i].name,
-                        mimeType : small[i].type || 'application/octet-stream',
-                        data     : base64,
-                        guestName: guestName,
-                        userAgent: navigator.userAgent,
-                    });
-                    success++;
-                } catch (err) {
-                    console.error('Upload failed:', small[i].name, err);
-                    failed.push(small[i].name);
-                }
-            }
-
-            setProgress(100);
-
-            // 결과 메시지 조합
-            const parts = [];
-            if (success > 0)       parts.push(`${success}장 도착 ✓`);
-            if (failed.length > 0) parts.push(`${failed.length}장 실패 — 다시 시도해주세요`);
-            if (large.length > 0)  parts.push(`대용량 ${large.length}개는 아래 버튼으로 보내주세요`);
-            showMsg(parts.join('\n'), success > 0 && failed.length === 0 ? 'text-success' : 'text-warn');
-
-            // 대용량 파일 안내 카드
-            if (large.length > 0) showDropboxCard(true, large);
-
-            btnFileText.innerText = '📸 다른 사진 더 보내기';
-            btnUpload.disabled = false;
-            setProgress(0, false);
-        });
-
-        // ── 업로드 (지수 백오프 재시도) ──────────────────────
-        async function uploadWithRetry(payload, attempt = 0) {
-            try {
-                const res = await fetch(GOOGLE_SCRIPT_URL, {
-                    method : 'POST',
-                    body   : JSON.stringify(payload),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                });
-                const json = await res.json();
-                if (json.status !== 'ok') throw new Error(json.message || 'Server error');
-            } catch (err) {
-                if (attempt < MAX_RETRY) {
-                    const delay = Math.pow(2, attempt) * 1000; // 1s → 2s → 4s
-                    showMsg(`잠시 후 다시 시도합니다… (${attempt + 1}/${MAX_RETRY})`, 'text-warn');
-                    await sleep(delay);
-                    return uploadWithRetry(payload, attempt + 1);
-                }
-                throw err;
-            }
-        }
-
-        // ── 헬퍼 ──────────────────────────────────────────────
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload  = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-        function showMsg(txt, cls) {
-            const el = document.getElementById('status-msg');
-            el.innerText = txt;
-            el.className = cls;
-        }
-
-        function setProgress(pct, show) {
-            const wrap = document.getElementById('progress-wrap');
-            const bar  = document.getElementById('progress-bar');
-            if (show !== undefined) wrap.style.display = show ? 'block' : 'none';
-            bar.style.width = pct + '%';
-        }
-
-        function showDropboxCard(show, largeFiles) {
-            const card = document.getElementById('dropbox-card');
-            card.style.display = show ? 'block' : 'none';
-            if (show && largeFiles && largeFiles.length > 0) {
-                const names = largeFiles.map(f =>
-                    `• ${f.name} (${(f.size / 1024 / 1024).toFixed(1)}MB)`
-                ).join('\n');
-                document.getElementById('dropbox-card-body').innerText =
-                    `아래 파일은 20MB를 초과해서 따로 보내주셔야 합니다.\n${names}\n\n로그인 없이 바로 업로드할 수 있습니다.`;
             }
         }
     </script>
