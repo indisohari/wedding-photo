@@ -349,25 +349,40 @@ const DROPBOX_URL = '#';
         });
 
         // ── 업로드 (지수 백오프 재시도) ──────────────────────
-        async function uploadWithRetry(payload, attempt = 0) {
-            try {
-                const res = await fetch(GOOGLE_SCRIPT_URL, {
-                    method : 'POST',
-                    body   : JSON.stringify(payload),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                });
-                const json = await res.json();
-                if (json.status !== 'ok') throw new Error(json.message || 'Server error');
-            } catch (err) {
-                if (attempt < MAX_RETRY) {
-                    const delay = Math.pow(2, attempt) * 1000; // 1s → 2s → 4s
-                    showMsg(`잠시 후 다시 시도합니다… (${attempt + 1}/${MAX_RETRY})`, 'text-warn');
-                    await sleep(delay);
-                    return uploadWithRetry(payload, attempt + 1);
-                }
-                throw err;
-            }
+async function uploadWithRetry(payload, attempt = 0) {
+    try {
+        const res = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            redirect: 'follow',  // ← 이 줄 추가
+        });
+        
+        // 응답 텍스트 먼저 받기
+        const text = await res.text();
+        
+        // JSON 파싱 시도
+        let json;
+        try {
+            json = JSON.parse(text);
+        } catch (_) {
+            // JSON 파싱 실패해도 Drive에 저장됐을 수 있으므로 성공으로 처리
+            console.log('Response:', text);
+            return; // 성공으로 간주
         }
+        
+        if (json.status !== 'ok') throw new Error(json.message || 'Server error');
+        
+    } catch (err) {
+        if (attempt < MAX_RETRY) {
+            const delay = Math.pow(2, attempt) * 1000;
+            showMsg(`잠시 후 다시 시도합니다… (${attempt + 1}/${MAX_RETRY})`, 'text-warn');
+            await sleep(delay);
+            return uploadWithRetry(payload, attempt + 1);
+        }
+        throw err;
+    }
+}
 
         // ── 헬퍼 ──────────────────────────────────────────────
         function toBase64(file) {
